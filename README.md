@@ -1,6 +1,6 @@
 # Neigborhood Map Project - My favorite Places in Zurich, Switzerland
 
-These are my project files for Udacity's neigborhood map project. To have a look at it you can either clone or download the project files as a zip file. Alternatively simply follow this link https://weissdev.github.io
+These are my project files for Udacity's neigborhood map project. To have a look at it you can either clone or download the project files as a zip file. Alternatively simply follow this link http://weissdev.github.io
 
 
 ## How to use
