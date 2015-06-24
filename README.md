@@ -19,8 +19,7 @@ I used several API's for this project:
 
 The development versions can be found in:
 
-js/app.js
-js/ajax.js
+js/app.js, js/ajax.js
 
 and
 
