@@ -15,6 +15,19 @@ I used several API's for this project:
 * Wikipedia API
 * Openweathermap API
 
+### Source Code
+
+The development versions can be found in:
+
+js/app.js
+js/ajax.js
+
+and
+
+css/style.css
+
+The minified version can be found in the 'dist' directory
+
 ### Resources used to complete this project
 
 * http://learn.knockoutjs.com A tutorial to learn the basics of the Knockout Framework
