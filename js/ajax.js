@@ -28,7 +28,7 @@ function getWeather() {
     $.ajax( {
         method: 'GET',
         url: weatherUrl,
-        dataType: 'json',
+        dataType: 'jsonp',
         success: function(data) {
             // Convert Kelvin to °C by subtracting 273.15
             var temp = data.main.temp - 273.15;
