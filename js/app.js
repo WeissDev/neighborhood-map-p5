@@ -2,14 +2,8 @@ var map,
 	infoWindow,
 	fullUrl,
 	streetViewImg,
-	headImageView,
 	streetViewUrl = 'https://maps.googleapis.com/maps/api/streetview?size=180x90&location=',
-	wikiString,
 	weatherString;
-
-var links = $('.links');
-
-var $locName = $('#location-name')
 
 // Initialize Google Maps
 function initialize() {
@@ -27,13 +21,14 @@ function initialize() {
 
 // Determines whether a marker should be visible or not when search filtering
 function determineVisibility() {
-	for (var i = 0; i < allMarkers.length; i++) {
+	var allMarkersLength = allMarkers.length;
+	for (var i = 0; i < allMarkersLength; i++) {
 		if (allMarkers[i].shouldDisplay === true) {
 			allMarkers[i].holdMarker.setMap(map);
 		} else {
 			allMarkers[i].holdMarker.setMap(null);
 		}
-	};
+	}
 }
 
 // The marker's array containing all data
@@ -199,7 +194,7 @@ function setMarkers(location) {
 			};
 		})(location[i].holdMarker, i));
 
-	}; // end for-loop
+	} // end for-loop
 } // end setMarkers
 
 initialize();
