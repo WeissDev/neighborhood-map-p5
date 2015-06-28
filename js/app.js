@@ -7,6 +7,7 @@ var map,
 
 // Initialize Google Maps
 function initialize() {
+	'use strict';
 	var mapOptions = {
 		zoom: 13,
 		center: new google.maps.LatLng(47.378236, 8.539439),
@@ -21,6 +22,7 @@ function initialize() {
 
 // Determines whether a marker should be visible or not when search filtering
 function determineVisibility() {
+	'use strict';
 	var allMarkersLength = allMarkers.length;
 	for (var i = 0; i < allMarkersLength; i++) {
 		if (allMarkers[i].shouldDisplay === true) {
@@ -135,6 +137,7 @@ var allMarkers = [
 ];
 
 function setMarkers(location) {
+	'use strict';
 	// Loops through each element in the allMarkers array and sets it on the map
 	for (var i = 0; i < location.length; i++) {
 

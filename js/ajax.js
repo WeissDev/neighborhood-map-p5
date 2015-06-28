@@ -1,4 +1,5 @@
 function getWiki(title) {
+    'use strict';
 	var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + title + '&format=json&callback=wikiCallback';
 
 	var wikiRequestTimeout = setTimeout(function (){
@@ -23,6 +24,7 @@ function getWiki(title) {
 }
 
 function getWeather() {
+    'use strict';
     var weatherUrl = 'http://api.openweathermap.org/data/2.5/weather?id=2657896&APPID=44d1e8b52c6f16e94976ca04871c8382';
 
     $.ajax( {
