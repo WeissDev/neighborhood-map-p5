@@ -147,15 +147,8 @@ var allMarkers = [
 function centerAdjust(latlng, adjustX, adjustY) {
 	'use strict';
 	var scale = Math.pow(2, map.getZoom());
-
-	var nw = new google.maps.LatLng(
-		map.getBounds().getNorthEast().lat(),
-		map.getBounds().getSouthWest().lng()
-	);
-
 	var center = map.getProjection().fromLatLngToPoint(latlng);
-
-		var adjust = new google.maps.Point((adjustX/scale) || 0, (adjustY/scale) || 0);
+	var adjust = new google.maps.Point((adjustX/scale) || 0, (adjustY/scale) || 0);
 
 	var pixelOffset = new google.maps.Point(
 		center.x - adjust.x,
