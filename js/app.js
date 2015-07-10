@@ -212,7 +212,7 @@ function setMarkers(location) {
 
 				map.setZoom(16);
 				infoWindow.open(map, this);
-				map.setCenter(centerAdjust(marker.getPosition(), 0, 150));
+				map.setCenter(centerAdjust(marker.getPosition(), 0, 180));
 			};
 		})(location[i].holdMarker, i));
 
@@ -225,7 +225,7 @@ function setMarkers(location) {
 
 				map.setZoom(16);
 				infoWindow.open(map, marker);
-				map.setCenter(centerAdjust(marker.getPosition(), 0, 150));
+				map.setCenter(centerAdjust(marker.getPosition(), 0, 180));
 			};
 		})(location[i].holdMarker, i));
 
