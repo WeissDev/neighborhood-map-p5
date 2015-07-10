@@ -15,9 +15,9 @@
     <div id="map-canvas" class="canvas"></div>
 
 
-    <div id="list-container" class="absolute">
+    <div id="list-container" class="absolute list-holder">
         <div id="search-input" foreach="foreach: filters">
-            <input id="input" name="search" type="text" data-bind="textInput: query, valueUpdate: 'keydown'" autocomplete="off" placeholder="Search for a location...">
+            <input id="input" class="input" name="search" type="text" data-bind="textInput: query, valueUpdate: 'keydown'" autocomplete="off" placeholder="Search for a location...">
         </div>
 
         <div id="sidebar-outer" class="absolute listnav-out">
@@ -40,7 +40,7 @@
 
         <div id="nav-arrow" class="absolute">
             <a href="#">
-                <img src="img/arrow-down.svg" alt="Arrow icon" id="arrow" class="absolute">
+                <img src="img/arrow-down.svg" alt="Arrow icon" id="arrow" class="absolute arrow-img">
             </a>
         </div>
 
@@ -51,15 +51,13 @@
     </div>
 
     <div id="weather-logo" class="absolute weather-logo">
-
-            <a href="#">
-                <img src="img/OpenWeatherMap-icon.png" alt="OpenWeatherMap Icon">
-            </a>
-
+        <a href="#">
+            <img src="img/OpenWeatherMap-icon.png" alt="OpenWeatherMap Icon">
+        </a>
     </div>
 
-    <div id="reset-button" class="absolute">
-        <button id="reset">Reset Zoom</button>
+    <div id="reset-button" class="absolute reset-btn">
+        <button id="reset" class="reset">Reset Zoom</button>
     </div>
 
 
