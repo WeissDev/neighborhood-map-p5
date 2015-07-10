@@ -17,7 +17,7 @@ function getWiki(title) {
                 articleStr = articleList[i];
                 fullUrl = 'http://en.wikipedia.org/wiki/' + articleStr;
                $('#wiki-elem').html('<img src="img/wiki-icon.png" alt="Wiki Icon"><a href="' + fullUrl + '">' + articleStr + '</a>');
-            };
+            }
         clearTimeout(wikiRequestTimeout);
         }
     });
@@ -45,7 +45,7 @@ function getWeather() {
             }
 
             /** Concatenates all the data into a readable format */
-            weatherString = '<h3>Today\'s weather in<span>' + data.name + ', ' + data.sys.country +'</span></h3>' +
+            weatherString = '<h3>Today\'s weather in ' + data.name + ', ' + data.sys.country +'</h3>' +
                             '<h3><img src="http://openweathermap.org/img/w/' + data.weather[0].icon + '.png" class="weather">' +
                             data.weather[0].main + ', ' + (Math.round(temp * 10) / 10) + ' °C</h3>' +
                             '<p>' + data.weather[0].description + ' today!</p>' +
