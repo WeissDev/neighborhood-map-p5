@@ -44,12 +44,11 @@ function getWeather() {
             }
 
             // Concatenates all the data into a readable format
-            weatherString = '<h3>Today\'s weather in</h3>' +
-                            '<h2>' + data.name + ', ' + data.sys.country +'</h2>' +
-                            '<h3><img src="http://openweathermap.org/img/w/' + data.weather[0].icon + '.png">' +
+            weatherString = '<h3>Today\'s weather in<span>' + data.name + ', ' + data.sys.country +'</span></h3>' +
+                            '<h3><img src="http://openweathermap.org/img/w/' + data.weather[0].icon + '.png" class="weather">' +
                             data.weather[0].main + ', ' + (Math.round(temp * 10) / 10) + ' °C</h3>' +
                             '<p>' + data.weather[0].description + ' today!</p>' +
-                            '<table style="width: 250px;">' +
+                            '<table style="width: 250px;" class="portrait-only">' +
                             '<tr>' +
                                 '<td>Pressure</td>' +
                                 '<td> ' + data.main.pressure + ' hPa</td>' +
@@ -71,7 +70,7 @@ function getWeather() {
                                 '<td> ' + data.wind.speed + ' m/s</td>' +
                             '</tr>' +
                             '</table>' +
-                            '<p>&copy; openweathermap.org</p>';
+                            '<p class="weather-copyright">&copy; openweathermap.org</p>';
             // Appends weather content to div#weather-container
             $('#weather-container').html(weatherString);
         },
