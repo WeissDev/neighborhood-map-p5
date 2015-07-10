@@ -35,3 +35,4 @@ The minified version can be found in the 'dist' directory
 * http://opensoul.org/2011/06/23/live-search-with-knockoutjs/
 * http://stackoverflow.com/questions/26698490/searching-filtering-with-knockoutjs Articles about search filtering with KnockoutJS
 * http://bennettfeely.com/gradients/ A great collection of CSS background designs using gradients. I implemented a simple gradient background for the weather div.
+* http://stackoverflow.com/questions/2674392/how-to-access-google-maps-api-v3-markers-div-and-its-pixel-position Forum thread discussing pixel positioning of Google Maps markers.
