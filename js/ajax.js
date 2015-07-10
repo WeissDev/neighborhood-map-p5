@@ -32,23 +32,24 @@ function getWeather() {
         url: weatherUrl,
         dataType: 'jsonp',
         success: function(data) {
-            // Convert Kelvin to °C by subtracting 273.15
+            /** Convert Kelvin to °C by subtracting 273.15 */
             var temp = data.main.temp - 273.15;
 
-            // Get sunrise/sunset time
-            // Converts it into a more "readable" Hour/Minutes format
+            /** Get sunrise/sunset time
+             * Converts it into a more "readable" Hour/Minutes format
+             */
             function getSunshine(timestamp) {
                 var timeValue = new Date(timestamp * 1000);
                 var hourFormat = timeValue.getHours() + ':' + timeValue.getMinutes();
                 return hourFormat;
             }
 
-            // Concatenates all the data into a readable format
+            /** Concatenates all the data into a readable format */
             weatherString = '<h3>Today\'s weather in<span>' + data.name + ', ' + data.sys.country +'</span></h3>' +
                             '<h3><img src="http://openweathermap.org/img/w/' + data.weather[0].icon + '.png" class="weather">' +
                             data.weather[0].main + ', ' + (Math.round(temp * 10) / 10) + ' °C</h3>' +
                             '<p>' + data.weather[0].description + ' today!</p>' +
-                            '<table style="width: 250px;" class="portrait-only">' +
+                            '<table style="width: 250px;">' +
                             '<tr>' +
                                 '<td>Pressure</td>' +
                                 '<td> ' + data.main.pressure + ' hPa</td>' +
@@ -71,7 +72,7 @@ function getWeather() {
                             '</tr>' +
                             '</table>' +
                             '<p class="weather-copyright">&copy; openweathermap.org</p>';
-            // Appends weather content to div#weather-container
+            /** Appends weather content to div#weather-container */
             $('#weather-container').html(weatherString);
         },
         error: function() {

@@ -3,9 +3,10 @@ var map,
 	fullUrl,
 	streetViewImg,
 	streetViewUrl = 'https://maps.googleapis.com/maps/api/streetview?size=180x90&location=',
-	weatherString;
+	weatherString,
+	articleStr;
 
-// Initialize Google Maps
+/** Initialize Google Maps */
 function initialize() {
 	'use strict';
 	var mapOptions = {
@@ -15,12 +16,12 @@ function initialize() {
 	};
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-	// Set all Markers from the allMarkers array
+	/** Set all Markers from the allMarkers array */
 	setMarkers(allMarkers);
 	determineVisibility();
 }
 
-// Determines whether a marker should be visible or not when search filtering
+/** Determines whether a marker should be visible or not when search filtering */
 function determineVisibility() {
 	'use strict';
 	var allMarkersLength = allMarkers.length;
@@ -33,7 +34,7 @@ function determineVisibility() {
 	}
 }
 
-// The marker's array containing all data
+/** The marker's array containing all data */
 var allMarkers = [
 	{
 		name: 'Zurich HB',
@@ -136,9 +137,43 @@ var allMarkers = [
 	}
 ];
 
+/**
+ * Adjusts map center on zoom to allow full visibility of infoWindow
+ * @constructor
+ * @param {number} latlng - Latititude and Longitude value
+ * @param {number} adjustX - Position adjustment value for X axis
+ * @param {number} adjustY - Position adjustment value for Y axis
+ */
+function centerAdjust(latlng, adjustX, adjustY) {
+	'use strict';
+	var scale = Math.pow(2, map.getZoom());
+
+	var nw = new google.maps.LatLng(
+		map.getBounds().getNorthEast().lat(),
+		map.getBounds().getSouthWest().lng()
+	);
+
+	var center = map.getProjection().fromLatLngToPoint(latlng);
+
+		var adjust = new google.maps.Point((adjustX/scale) || 0, (adjustY/scale) || 0);
+
+	var pixelOffset = new google.maps.Point(
+		center.x - adjust.x,
+		center.y - adjust.y
+	);
+
+	var newCenter = map.getProjection().fromPointToLatLng(pixelOffset);
+		return newCenter;
+}
+
+/**
+ * This function loops through each element in the allMarkers array and sets it on the map
+ * @constructor
+ * @param {String[]} location - Data from the allMarkers array
+ */
+
 function setMarkers(location) {
 	'use strict';
-	// Loops through each element in the allMarkers array and sets it on the map
 	for (var i = 0; i < location.length; i++) {
 
 		location[i].holdMarker = new google.maps.Marker({
@@ -153,12 +188,16 @@ function setMarkers(location) {
 			}
 		});
 
-		// Access street view data
-		// to be placed in InfoWindow
+		/**
+		 * Access street view data
+		 * to be placed in InfoWindow
+		 */
 		streetViewImg = streetViewUrl + location[i].lat + ',' + location[i].lng;
 
-		// contentString: string concatenation with all the data from the allMarkers array
-		// also street view images for every location
+		/**
+		 * contentString: string concatenation with all the data from the allMarkers array
+		 * also street view images for every location
+		 */
 		location[i].contentString = '<strong>' + location[i].name +
 									'</strong><br>' + location[i].street +
 									'<br>' + location[i].city +
@@ -166,39 +205,12 @@ function setMarkers(location) {
 									'<p style="font-style: italic;">' + location[i].comment + '</p>' +
 									'<img src="' + streetViewImg + '" alt="Street View Image">';
 
-		// Creates new Google Maps Infowindow
+		/** Creates new Google Maps Infowindow */
 		infoWindow = new google.maps.InfoWindow({
 			maxWidth: 200,
 			content: location[i].contentString
 		});
 
-		/**
-		 * Adjusts map center on zoom to allow full visibility of infoWindow
-		 * @constructor
-		 * @param {number} latlng - Latititude and Longitude value
-		 * @param {number} adjustX - Position adjustment value for X axis
-		 * @param {number} adjustY - Position adjustment value for Y axis
-		 */
-		function centerAdjust(latlng, adjustX, adjustY) {
-			var scale = Math.pow(2, map.getZoom());
-
-			var nw = new google.maps.LatLng(
-    			map.getBounds().getNorthEast().lat(),
-    			map.getBounds().getSouthWest().lng()
-			);
-
-			var center = map.getProjection().fromLatLngToPoint(latlng);
-
-   			var adjust = new google.maps.Point((adjustX/scale) || 0, (adjustY/scale) || 0);
-
-			var pixelOffset = new google.maps.Point(
-    			center.x - adjust.x,
-    			center.y - adjust.y
-			);
-
-			var newCenter = map.getProjection().fromPointToLatLng(pixelOffset);
-   			return newCenter;
-		}
 
 		/**
 		 * Listens to click event on map marker, zooms in, centers the mao, and opens Infowindow on click
@@ -216,8 +228,10 @@ function setMarkers(location) {
 			};
 		})(location[i].holdMarker, i));
 
-		// Click event listener for the all the list elements in the list view
-		// If fired, the infoWindow will open and display information
+		/**
+		 * Click event listener for the all the list elements in the list view
+		 * If fired, the infoWindow will open and display information
+		 */
 		$(document).on('click', '#nav' + i, (function(marker, i) {
 			return function() {
 				getWiki(location[i].name);
@@ -242,7 +256,7 @@ var viewModel = {
 	query: ko.observable('')
 };
 
-// Search Filter
+/** Search Filter */
 viewModel.markers = ko.computed(function() {
 	var self = this;
 	var search = self.query().toLowerCase();
@@ -261,21 +275,23 @@ viewModel.markers = ko.computed(function() {
 
 ko.applyBindings(viewModel);
 
-// Sync marker visibility with search input
+/** Sync marker visibility with search input */
 $("#input").keyup(function() {
 	determineVisibility();
 });
 
-// Weather is hidden by default
+/**  Weather is hidden by default */
 var weatherVisible = false;
 
 
-// Click event listener which will make the weather Div slide up and down
-// The if/else statement checks whether the div is currently visible or not
-// and will run jQuery's animate() to slide it up or down
+/**
+ * Click event listener which will make the weather Div slide up and down
+ * The if/else statement checks whether the div is currently visible or not
+ * and will run jQuery's animate() to slide it up or down
+ */
 
 $('#weather-logo img').on('click', function() {
-	// If weather div not visible, slide up
+	/** If weather div not visible, slide up */
 	if (!weatherVisible) {
 		$('#weather-container').animate({
 			bottom: '0px'
@@ -285,10 +301,10 @@ $('#weather-logo img').on('click', function() {
 			bottom: '20em'
 		}, 200);
 
-		// Animation finished, weather is now visible
+		/** Animation finished, weather is now visible */
 		weatherVisible = true;
 
-	// Else if weather div is visiblle, slide down
+	/** Else if weather div is visiblle, slide down */
 	} else if (weatherVisible) {
 		$('#weather-container').animate({
 			bottom: '-20em'
@@ -298,22 +314,24 @@ $('#weather-logo img').on('click', function() {
 			bottom: '0px'
 		}, 200);
 
-		// Animation finished, weather is now not visible
+		/** Animation finished, weather is now not visible */
 		weatherVisible = false;
 	}
 });
 
 
 
-// List view is hidden by default
+/** List view is hidden by default */
 var navVisible = false;
 var $navHolder = $('#sidebar-outer');
 
-// Click event listener for the list navigation arrow icon
-// If/else statement checks whether the nav is currently visible or not
-// and slides it up or down accordingly
-// This also uses two different arrow svg's. One pointing up the other down
-// They also change based on the visibility of the nav
+/**
+ * Click event listener for the list navigation arrow icon
+ * If/else statement checks whether the nav is currently visible or not
+ * and slides it up or down accordingly
+ * This also uses two different arrow svg's. One pointing up the other down
+ * They also change based on the visibility of the nav
+ */
 
 var navHeight = $('#sidebar-outer').height();
 
@@ -322,7 +340,7 @@ $('.listnav-out').css('top', -navHeight);
 
 $('#arrow').on('click', function() {
 
-	// If nav is not visible, slide down
+	/** If nav is not visible, slide down */
 	if (!navVisible) {
 		$navHolder.animate({
 			top: '35px'
@@ -332,10 +350,10 @@ $('#arrow').on('click', function() {
 			top: navHeight
 		}, 200).attr('src', 'img/arrow-up.svg');
 
-		// Nav is now visible
+		/** Nav is now visible */
 		navVisible = true;
 
-	// Else if nav is visible, slide up
+	/** Else if nav is visible, slide up */
 	} else if (navVisible) {
 		$navHolder.animate({
 			top: -navHeight
@@ -345,12 +363,12 @@ $('#arrow').on('click', function() {
 			top: '0'
 		}, 200).attr('src', 'img/arrow-down.svg');
 
-		// Nav is now not visible
+		/** Nav is now not visible */
 		navVisible = false;
 	}
 });
 
-// Click event listener for the 'Reset Zoom' button
+/** Click event listener for the 'Reset Zoom' button */
 $('#reset').on('click', function() {
 	infoWindow.close();
 	map.setZoom(13);

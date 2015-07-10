@@ -46,16 +46,8 @@ a {
 	margin-left: 0;
 }
 
-.weather-copyright {
-	display: none;
-}
-
 a:visited {
 	color: #f0994d;
-}
-
-span {
-	font-size: 1.2em;
 }
 
 td {
@@ -158,10 +150,10 @@ td {
 	margin-left: 5%;
 }
 
-td {
+/*td {
 	padding: 3px;
 	border: 1px solid #bbb;
-}
+}*/
 
 @media screen and (min-width: 330px) {
 
@@ -206,12 +198,15 @@ td {
 	}
 }
 
-/* Styling rules for desktop and tablet viewports */
-
 @media screen and (min-width: 800px) {
 
 	.listnav-out,
 	.listnav-in {
 		height: 250px;
+	}
+
+	h3,
+	td {
+		font-size: 1em;
 	}
 }
