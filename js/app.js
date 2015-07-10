@@ -172,16 +172,47 @@ function setMarkers(location) {
 			content: location[i].contentString
 		});
 
-		// Listens to click event on map marker, zooms in, centers the mao, and opens Infowindow on click
-		// On click the getWiki() function will be invoked which will make an AJAX request
-		// and search for a related article for the location
+		/**
+		 * Adjusts map center on zoom to allow full visibility of infoWindow
+		 * @constructor
+		 * @param {number} latlng - Latititude and Longitude value
+		 * @param {number} adjustX - Position adjustment value for X axis
+		 * @param {number} adjustY - Position adjustment value for Y axis
+		 */
+		function centerAdjust(latlng, adjustX, adjustY) {
+			var scale = Math.pow(2, map.getZoom());
+
+			var nw = new google.maps.LatLng(
+    			map.getBounds().getNorthEast().lat(),
+    			map.getBounds().getSouthWest().lng()
+			);
+
+			var center = map.getProjection().fromLatLngToPoint(latlng);
+
+   			var adjust = new google.maps.Point((adjustX/scale) || 0, (adjustY/scale) || 0);
+
+			var pixelOffset = new google.maps.Point(
+    			center.x - adjust.x,
+    			center.y - adjust.y
+			);
+
+			var newCenter = map.getProjection().fromPointToLatLng(pixelOffset);
+   			return newCenter;
+		}
+
+		/**
+		 * Listens to click event on map marker, zooms in, centers the mao, and opens Infowindow on click
+		 * On click the getWiki() function will be invoked which will make an AJAX request
+		 * and search for a related article for the location
+		 */
 		google.maps.event.addListener(location[i].holdMarker, 'click', (function(marker, i) {
 			return function() {
 				getWiki(location[i].name);
 				infoWindow.setContent(location[i].contentString);
-				map.setCenter(marker.getPosition());
+
 				map.setZoom(16);
 				infoWindow.open(map, this);
+				map.setCenter(centerAdjust(marker.getPosition(), 0, 150));
 			};
 		})(location[i].holdMarker, i));
 
@@ -191,9 +222,10 @@ function setMarkers(location) {
 			return function() {
 				getWiki(location[i].name);
 				infoWindow.setContent(location[i].contentString);
-				map.setCenter(marker.getPosition());
+
 				map.setZoom(16);
 				infoWindow.open(map, marker);
+				map.setCenter(centerAdjust(marker.getPosition(), 0, 150));
 			};
 		})(location[i].holdMarker, i));
 
@@ -202,9 +234,9 @@ function setMarkers(location) {
 
 initialize();
 
-/*
-ViewModel Section
-*/
+/**
+ * ViewModel Section
+ */
 
 var viewModel = {
 	query: ko.observable('')
@@ -237,11 +269,12 @@ $("#input").keyup(function() {
 // Weather is hidden by default
 var weatherVisible = false;
 
+
 // Click event listener which will make the weather Div slide up and down
 // The if/else statement checks whether the div is currently visible or not
 // and will run jQuery's animate() to slide it up or down
-$('#weather-logo img').on('click', function() {
 
+$('#weather-logo img').on('click', function() {
 	// If weather div not visible, slide up
 	if (!weatherVisible) {
 		$('#weather-container').animate({
@@ -249,7 +282,7 @@ $('#weather-logo img').on('click', function() {
 		}, 200);
 
 		$('#weather-logo').animate({
-			bottom: '400px'
+			bottom: '20em'
 		}, 200);
 
 		// Animation finished, weather is now visible
@@ -258,7 +291,7 @@ $('#weather-logo img').on('click', function() {
 	// Else if weather div is visiblle, slide down
 	} else if (weatherVisible) {
 		$('#weather-container').animate({
-			bottom: '-400px'
+			bottom: '-20em'
 		}, 200);
 
 		$('#weather-logo').animate({
@@ -270,6 +303,8 @@ $('#weather-logo img').on('click', function() {
 	}
 });
 
+
+
 // List view is hidden by default
 var navVisible = false;
 var $navHolder = $('#sidebar-outer');
@@ -279,6 +314,12 @@ var $navHolder = $('#sidebar-outer');
 // and slides it up or down accordingly
 // This also uses two different arrow svg's. One pointing up the other down
 // They also change based on the visibility of the nav
+
+var navHeight = $('#sidebar-outer').height();
+
+$('.listnav-out').css('top', -navHeight);
+
+
 $('#arrow').on('click', function() {
 
 	// If nav is not visible, slide down
@@ -288,7 +329,7 @@ $('#arrow').on('click', function() {
 		}, 200);
 
 		$('#arrow').animate({
-			top: '280px'
+			top: navHeight
 		}, 200).attr('src', 'img/arrow-up.svg');
 
 		// Nav is now visible
@@ -297,7 +338,7 @@ $('#arrow').on('click', function() {
 	// Else if nav is visible, slide up
 	} else if (navVisible) {
 		$navHolder.animate({
-			top: '-315px'
+			top: -navHeight
 		}, 200);
 
 		$('#arrow').animate({
@@ -311,5 +352,6 @@ $('#arrow').on('click', function() {
 
 // Click event listener for the 'Reset Zoom' button
 $('#reset').on('click', function() {
-	 map.setZoom(13);
+	infoWindow.close();
+	map.setZoom(13);
 });
