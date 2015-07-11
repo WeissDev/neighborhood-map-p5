@@ -102,16 +102,16 @@ td {
 	left: 0px;
 	bottom: 0;
 	width: 100%;
-	height: 20em;
+	height: 19em;
 	pointer-events: none;
 }
 
 .weather-holder-inner {
 
 	left: 0px;
-	bottom: 20em;
+	bottom: 19em;
 	width: 100%;
-	height: 20em;
+	height: 19em;
 
 	background: -webkit-linear-gradient(skyblue, transparent),
 	-webkit-linear-gradient(to right, #fff, transparent);
@@ -143,7 +143,7 @@ td {
 
 	.weather-holder-inner,
 	.weather-holder-outer {
-		width: 325px;
+		width: 200px;
 	}
 
 	.weather-logo {
@@ -160,11 +160,6 @@ td {
 		bottom: 0px;
 		left: 135px;
 	}
-
-	.weather-holder-inner * {
-		margin-left: 20%;
-	}
-
 }
 
 @media screen and (max-height: 480px) {
