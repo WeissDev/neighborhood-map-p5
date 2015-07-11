@@ -70,8 +70,7 @@ function getWeather() {
                                 '<td>Wind</td>' +
                                 '<td> ' + data.wind.speed + ' m/s</td>' +
                             '</tr>' +
-                            '</table>' +
-                            '<p class="weather-copyright">&copy; openweathermap.org</p>';
+                            '</table>';
             /** Appends weather content to div#weather-container */
             $('#weather-container').html(weatherString);
         },
