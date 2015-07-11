@@ -291,7 +291,7 @@ $('#weather-logo img').on('click', function() {
 		}, 200);
 
 		$('#weather-logo').animate({
-			bottom: '20em'
+			bottom: '19em'
 		}, 200);
 
 		/** Animation finished, weather is now visible */
@@ -300,7 +300,7 @@ $('#weather-logo img').on('click', function() {
 	/** Else if weather div is visiblle, slide down */
 	} else if (weatherVisible) {
 		$('#weather-container').animate({
-			bottom: '-20em'
+			bottom: '-19em'
 		}, 200);
 
 		$('#weather-logo').animate({
